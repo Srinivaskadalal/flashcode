@@ -12,13 +12,13 @@ const compat = new FlatCompat({
 });
 
 export default [
-  ...compat.extends(
+  ...compat.extends([
     "next/core-web-vitals",
     "next/typescript",
     "standard",
     "plugin:tailwindcss/recommended",
-    "prettier"
-  ),
+    "prettier",
+  ]),
   {
     rules: {
       "no-undef": "off",
