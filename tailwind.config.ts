@@ -42,7 +42,7 @@ const config: Config = {
         xs: "420px",
       },
       fontFamily: {
-        inter: ["var(--font-inter)"],
+        montserrat: ["var(--font-montserrat)"],
         "space-grotesk": ["var(--font-space-grotesk)"],
       },
       borderRadius: {
