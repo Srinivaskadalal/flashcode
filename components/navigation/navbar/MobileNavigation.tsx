@@ -20,7 +20,7 @@ export default function MobileNavigation() {
           alt="side_menubar_icon"
           width={36}
           height={36}
-          className=" rounded-2 bg-black p-2"
+          className=" rounded-2 bg-black p-2 sm:hidden"
         />
       </SheetTrigger>
       <SheetContent
@@ -41,14 +41,14 @@ export default function MobileNavigation() {
             <span className="!text-[#1E3A8A] dark:text-[#00C8FF]">Code</span>
           </p>
         </Link>
-        <div className=" no-scrollbar flex h-[calc(100vh-80px)] flex-col justify-between overflow-y-auto">
+        <div className=" no-scrollbar flex h-full flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
-            <section className="flex h-full flex-col gap-6 pt-16">
+            <section className="flex flex-col gap-6 pt-16">
               <NavLinks isMobileNav />
             </section>
           </SheetClose>
 
-          <div className="flex flex-col gap-3 ">
+          <div className="flex flex-col gap-3 py-6 ">
             {" "}
             <SheetClose asChild>
               <Link href={ROUTES.SIGN_IN}>
