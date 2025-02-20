@@ -1,69 +1,139 @@
-// import { auth, signOut } from "@/auth";
-// import { Button } from "@/components/ui/button";
-// import ROUTES from "@/constants/routes";
-// import Image from "next/image";
-
-// export default async function Home() {
-//   const session = await auth();
-//   console.log(session);
-//   return (
-//     <>
-//       <div className="flex flex-col h-screen items-center justify-center">
-//         <h1>CONTENT GOES HERE</h1>
-//         <h2>YET TO DEVELOP </h2>
-//         <form
-//           className="px-10 pt-[100px]"
-//           action={async () => {
-//             "use server";
-//             await signOut({ redirectTo: ROUTES.SIGN_IN });
-//           }}
-//         >
-//           {/* <Button type="submit">logout</Button> */}
-//         </form>
-//       </div>
-//     </>
-//   );
-// }
 import { auth, signOut } from "@/auth";
+import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 import Image from "next/image";
+import Link from "next/link";
+const questions = [
+  {
+    _id: "1",
+    title: "How does TypeScript improve JavaScript development?",
+    tags: [
+      { _id: "1", name: "JavaScript" },
+      { _id: "2", name: "TypeScript" },
+    ],
+    author: { _id: "1", name: "Nithin" },
+    upvotes: 10,
+    answers: 7,
+    views: 256,
+    createdAt: new Date(),
+  },
+  {
+    _id: "2",
+    title: "What are the key differences between React and Angular?",
+    tags: [
+      { _id: "3", name: "React" },
+      { _id: "4", name: "Angular" },
+    ],
+    author: { _id: "2", name: "Sarah" },
+    upvotes: 15,
+    answers: 5,
+    views: 312,
+    createdAt: new Date(),
+  },
+  {
+    _id: "3",
+    title: "How does Java's garbage collection work?",
+    tags: [
+      { _id: "5", name: "Java" },
+      { _id: "6", name: "Memory Management" },
+    ],
+    author: { _id: "3", name: "Mike" },
+    upvotes: 8,
+    answers: 3,
+    views: 189,
+    createdAt: new Date(),
+  },
+  {
+    _id: "4",
+    title: "What is the difference between SQL and NoSQL databases?",
+    tags: [
+      { _id: "7", name: "SQL" },
+      { _id: "8", name: "NoSQL" },
+    ],
+    author: { _id: "4", name: "Emma" },
+    upvotes: 20,
+    answers: 6,
+    views: 410,
+    createdAt: new Date(),
+  },
+  {
+    _id: "5",
+    title: "How can I get involved in the Kent State University Coding Club?",
+    tags: [
+      { _id: "9", name: "Kent State University" },
+      { _id: "10", name: "Coding Community" },
+    ],
+    author: { _id: "5", name: "David" },
+    upvotes: 12,
+    answers: 4,
+    views: 275,
+    createdAt: new Date(),
+  },
+  {
+    _id: "6",
+    title: "What are some coding competitions hosted at Kent State University?",
+    tags: [
+      { _id: "9", name: "Kent State University" },
+      { _id: "11", name: "Hackathons" },
+    ],
+    author: { _id: "6", name: "Sophia" },
+    upvotes: 18,
+    answers: 9,
+    views: 330,
+    createdAt: new Date(),
+  },
+  {
+    _id: "7",
+    title: "What are the best study spots on the Kent State University campus?",
+    tags: [
+      { _id: "9", name: "Kent State University" },
+      { _id: "12", name: "Campus Life" },
+    ],
+    author: { _id: "7", name: "Liam" },
+    upvotes: 22,
+    answers: 10,
+    views: 450,
+    createdAt: new Date(),
+  },
+];
 
-export default async function Home() {
+interface SearchParams {
+  searchParams: Promise<{ [Key: string]: string }>;
+}
+export default async function Home({ searchParams }: SearchParams) {
   const session = await auth();
   console.log(session);
 
+  const { query = "" } = await searchParams;
+
+  const filteredQuestions = questions.filter((question) =>
+    question.title.toLowerCase().includes(query?.toLowerCase())
+  );
   return (
-    <div className="flex flex-col h-screen items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <h1 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 drop-shadow-lg animate-fade-in">
-        CONTENT GOES HERE
-      </h1>
-      <h2 className="text-2xl font-medium text-gray-300 uppercase tracking-widest mt-4 animate-pulse">
-        YET TO DEVELOP - End Of Week 2
-      </h2>
+    <>
+      <section className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
+        <h1 className="h1-bold text-dark100_light900">All Questions</h1>
 
-      <Image
-        src="/images/spidey.svg"
-        alt="spider_man_svg"
-        width={200}
-        height={200}
-        className="mt-6 rounded-lg shadow-lg"
-      />
-
-      <form
-        className="mt-10 flex flex-col items-center space-y-4"
-        action={async () => {
-          "use server";
-          await signOut({ redirectTo: ROUTES.SIGN_IN });
-        }}
-      >
-        <Button
-          type="submit"
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 transition-all text-white font-semibold rounded-xl shadow-md hover:shadow-lg transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Logout
+        <Button className="primary-gradient2 min-h-[46px] px-4 py-3 dark:text-white ">
+          <Link href={ROUTES.ASK_FLASH}>Ask Flashes</Link>
         </Button>
-      </form>
-    </div>
+      </section>
+
+      <section className="mt-11">
+        <LocalSearch
+          route="/"
+          imgSrc="/icons/search.svg"
+          placeholder="search question"
+          otherClasses="flex-1"
+        />
+      </section>
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {filteredQuestions.map((question) => (
+          <h1 key={question._id}>{question.title}</h1>
+        ))}
+      </div>
+    </>
   );
 }
