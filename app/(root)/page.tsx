@@ -1,10 +1,12 @@
 import { auth, signOut } from "@/auth";
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+
 const questions = [
   {
     _id: "1",
@@ -13,7 +15,7 @@ const questions = [
       { _id: "1", name: "JavaScript" },
       { _id: "2", name: "TypeScript" },
     ],
-    author: { _id: "1", name: "Nithin" },
+    author: { _id: "1", name: "Nithin", image: "/dummy.png" },
     upvotes: 10,
     answers: 7,
     views: 256,
@@ -69,7 +71,7 @@ const questions = [
     upvotes: 12,
     answers: 4,
     views: 275,
-    createdAt: new Date(),
+    createdAt: new Date("2024-12-13"),
   },
   {
     _id: "6",
@@ -138,7 +140,7 @@ export default async function Home({ searchParams }: SearchParams) {
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <h1 key={question._id}>{question.title}</h1>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
