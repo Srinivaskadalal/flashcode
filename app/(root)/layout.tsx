@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import Navbar from "@/components/navigation/navbar/index";
 import LeftSidebar from "@/components/navigation/LeftSidebar";
-import RighrSidebar from "@/components/navigation/RighrSidebar";
+import RightSidebar from "@/components/navigation/RightSidebar";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
@@ -13,9 +13,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="mx-auto w-full max-w-5xl">{children}</div>
         </section>
 
-        <RighrSidebar />
+        <RightSidebar />
       </div>
     </main>
   );
 }
-//

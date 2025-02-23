@@ -1,7 +1,11 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import TagCard from "../cards/TagCard";
+import UpcomingEvents from "../cards/UpcomingEvents";
+import CodingChallenges from "../cards/CodingChallenges";
+import { usePathname } from "next/navigation";
 
 type Question = {
   _id: string;
@@ -39,7 +43,10 @@ const kentStateTags = [
   { _id: "5", title: "typescript", questions: 7 },
 ];
 
-const RighrSidebar = () => {
+const RightSidebar = () => {
+  const pathname = usePathname();
+  if (pathname === "/events") return null;
+
   return (
     <section className="pt-36 custom-scrollbar background-light900_dark200 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col gap-6 overflow-y-auto border-l p-6 shadow-light-300 dark:shadow-none max-xl:hidden">
       <div>
@@ -63,7 +70,10 @@ const RighrSidebar = () => {
           ))}
         </div>
       </div>
-
+      <hr />
+      <UpcomingEvents />
+      <CodingChallenges />
+      <hr />
       <div className="mt-16">
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
 
@@ -84,4 +94,4 @@ const RighrSidebar = () => {
   );
 };
 
-export default RighrSidebar;
+export default RightSidebar;
