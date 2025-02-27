@@ -19,9 +19,8 @@ import dynamic from "next/dynamic";
 import { z } from "zod";
 import TagCard from "../cards/TagCard";
 
-const Editor = dynamic(() => import("@/components/editor"), {
-  ssr: false,
-});
+const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
+
 const QuestionForm = () => {
   const editorRef = useRef<MDXEditorMethods>(null);
   const form = useForm<z.infer<typeof AskQuestionSchema>>({
@@ -32,6 +31,7 @@ const QuestionForm = () => {
       tags: [],
     },
   });
+
   const handleInputKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     field: { value: string[] }
@@ -41,19 +41,20 @@ const QuestionForm = () => {
       const tagInput = e.currentTarget.value.trim();
 
       if (tagInput && tagInput.length < 15 && !field.value.includes(tagInput)) {
-        form.setValue("tags", [...field.value, tagInput]);
-
+        form.setValue("tags", [...field.value, tagInput], {
+          shouldValidate: true,
+        });
         e.currentTarget.value = "";
         form.clearErrors("tags");
       } else if (tagInput.length > 15) {
         form.setError("tags", {
           type: "manual",
-          message: "Tags Should be less than 15 characters",
+          message: "Tags should be less than 15 characters",
         });
       } else if (field.value.includes(tagInput)) {
         form.setError("tags", {
           type: "manual",
-          message: "Tag already exist",
+          message: "Tag already exists",
         });
       }
     }
@@ -66,51 +67,56 @@ const QuestionForm = () => {
     if (newTags.length === 0) {
       form.setError("tags", {
         type: "manual",
-        message: "Tags are required",
+        message: "At least one tag is required",
       });
     } else {
       form.clearErrors("tags");
     }
   };
+
   const handleCreateQuestion = (data: z.infer<typeof AskQuestionSchema>) => {
-    console.log(data);
+    console.log("Form Submitted:", data);
   };
+
   return (
     <Form {...form}>
       <form
-        className="flex w-full flex-col gap-10"
+        className="flex flex-col gap-8 w-full max-w-2xl mx-auto bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md"
         onSubmit={form.handleSubmit(handleCreateQuestion)}
       >
+        {/* Question Title */}
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="flex w-full flex-col ">
-              <FormLabel className="paragraph-semibold text-dark400_light800">
-                Question Title <span className="text-primary-500">*</span>
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                Question Title <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
+                  placeholder="Write a clear and concise question title..."
+                  className="border border-gray-300 dark:border-gray-700 p-3 rounded-lg focus:ring-2 focus:ring-primary-500"
                 />
               </FormControl>
-              <FormDescription className="body-regular  text-light-500 mt-2.5">
-                Be specific you are aksing a question to another person
+              <FormDescription className="text-gray-500 dark:text-gray-400">
+                Be specific when asking your question so others can understand
+                it quickly.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        {/*  */}
+
+        {/* Detailed Explanation */}
         <FormField
           control={form.control}
           name="content"
           render={({ field }) => (
-            <FormItem className="flex w-full flex-col ">
-              <FormLabel className="paragraph-semibold text-dark400_light800">
-                Detailed Explanation of Your Problem{" "}
-                <span className="text-primary-500">*</span>
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                Detailed Explanation <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Editor
@@ -119,62 +125,60 @@ const QuestionForm = () => {
                   fieldChange={field.onChange}
                 />
               </FormControl>
-              <FormDescription className="body-regular  text-light-500 mt-2.5">
-                Inrtroudce your problem and expang what you said in question
-                title
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/*  */}
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem className="flex w-full flex-col ">
-              <FormLabel className="paragraph-semibold text-dark400_light800">
-                Tags <span className="text-primary-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <div>
-                  <Input
-                    className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 no-focus min-h-[56px] border"
-                    placeholder="add Tags..."
-                    onKeyDown={(e) => {
-                      handleInputKeyDown(e, field);
-                    }}
-                  />
-                  {field.value.length > 0 && (
-                    <div className="flex-start mt-2.5 flex-wrap gap-2.5">
-                      {field?.value?.map((tag: string) => (
-                        <TagCard
-                          key={tag}
-                          _id={tag}
-                          name={tag}
-                          compact
-                          remove
-                          isButton
-                          handleRemove={() => handleTagRemove(tag, field)}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </FormControl>
-              <FormDescription className="body-regular  text-light-500 mt-2.5">
-                Add Upto Three tags what you question about you need press enter
-                to add your tag
+              <FormDescription className="text-gray-500 dark:text-gray-400">
+                Provide detailed context and background to make your question
+                clear.
               </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="mt-16 flex justify-end">
+        {/* Tags Section */}
+        <FormField
+          control={form.control}
+          name="tags"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                Tags <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  className="border border-gray-300 dark:border-gray-700 p-3 rounded-lg focus:ring-2 focus:ring-primary-500"
+                  placeholder="Type a tag and press Enter..."
+                  onKeyDown={(e) => handleInputKeyDown(e, field)}
+                />
+              </FormControl>
+              {field.value.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {field.value.map((tag: string) => (
+                    <TagCard
+                      key={tag}
+                      _id={tag}
+                      name={tag}
+                      compact
+                      remove
+                      isButton
+                      handleRemove={() => handleTagRemove(tag, field)}
+                    />
+                  ))}
+                </div>
+              )}
+              <FormDescription className="text-gray-500 dark:text-gray-400">
+                Add up to three tags that describe your question. Press Enter to
+                add each tag.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Submit Button */}
+        <div className="flex justify-end">
           <Button
             type="submit"
-            className="primary-gradient2 !text-light-900 w-fit"
+            className="primary-gradient2 hover:bg-primary-600 text-white font-semibold py-3 px-6 rounded-lg"
           >
             Submit Your Question
           </Button>

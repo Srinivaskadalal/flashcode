@@ -57,7 +57,6 @@ export default function Editor({
       className="background-light800_dark200 light-border-2 markdown-editor dark-editor w-full border grid"
       onChange={fieldChange}
       plugins={[
-        // Example Plugin Usage
         headingsPlugin(),
         listsPlugin(),
         linkPlugin(),
