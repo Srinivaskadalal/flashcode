@@ -1,4 +1,7 @@
-flask
-flask-cors
+Flask
+Flask-CORS
 pymongo
-python-dotenv
+Flask-JWT-Extended
+requests
+datetime
+urllib3
