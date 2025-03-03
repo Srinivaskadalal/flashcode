@@ -1,10 +1,12 @@
+import { NextResponse } from "next/server";
+
 import User from "@/database/user.model";
 import handleError from "@/lib/handlers/error";
 import { NotFoundError } from "@/lib/http-errors";
 import dbConnect from "@/lib/mongoose";
 import { UserSchema } from "@/lib/validations";
-import { NextResponse } from "next/server";
 
+// GET /api/users/[id]
 export async function GET(
   _: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -14,16 +16,17 @@ export async function GET(
 
   try {
     await dbConnect();
+
     const user = await User.findById(id);
     if (!user) throw new NotFoundError("User");
 
-    return NextResponse.json({ success: true, data: user });
-  } catch (eror) {
-    return handleError(eror, "api") as APIErrorResponse;
+    return NextResponse.json({ success: true, data: user }, { status: 200 });
+  } catch (error) {
+    return handleError(error, "api") as APIErrorResponse;
   }
 }
 
-// delete
+// DELETE /api/users/[id]
 export async function DELETE(
   _: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -42,7 +45,8 @@ export async function DELETE(
     return handleError(error, "api") as APIErrorResponse;
   }
 }
-// put
+
+// PUT /api/users/[id]
 export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }

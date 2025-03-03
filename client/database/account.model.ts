@@ -1,11 +1,11 @@
-import { Schema, model, models, Types, Document } from "mongoose";
+import { model, models, Schema, Types, Document } from "mongoose";
 
 export interface IAccount {
   userId: Types.ObjectId;
   name: string;
   image?: string;
   password?: string;
-  provider: string; // e.g., 'github', 'google', 'credentials'
+  provider: string;
   providerAccountId: string;
 }
 
