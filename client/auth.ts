@@ -4,7 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
-import { IAccountDoc } from "./database/account.model";
+import Account, { IAccountDoc } from "./database/account.model";
 import { IUserDoc } from "./database/user.model";
 import { api } from "./lib/api";
 import { SignInSchema } from "./lib/validations";
@@ -20,9 +20,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
 
-          const { data: existingAccount } = (await api.accounts.getByProvider(
-            email
-          )) as ActionResponse<IAccountDoc>;
+          const existingAccount = await Account.findOne({
+            providerAccountId: email,
+          });
 
           if (!existingAccount) return null;
 
