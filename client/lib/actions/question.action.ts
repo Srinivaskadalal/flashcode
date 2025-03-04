@@ -2,7 +2,7 @@
 
 import mongoose, { FilterQuery } from "mongoose";
 
-import Question, { IQuestionDoc } from "@/database/question.model";
+import Question, { IQuestion as IQuestionDoc } from "@/database/question.model";
 import TagQuestion from "@/database/tag-question.model";
 import Tag, { ITagDoc } from "@/database/tag.model";
 
@@ -280,7 +280,7 @@ export async function getQuestions(
 
     const questions = await Question.find(filterQuery)
       .populate("tags", "name")
-      // .populate("author", "name image")
+      .populate("author", "name image")
       .lean()
       .sort(sortCriteria)
       .skip(skip)
