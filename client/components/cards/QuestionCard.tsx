@@ -3,7 +3,7 @@ import { getTimeStamp } from "@/lib/utils";
 import Link from "next/link";
 import ROUTES from "@/constants/routes";
 import TagCard from "@/components/cards/TagCard";
-import Metric from "../ui/Metric";
+import Metric from "../Metric";
 import Image from "next/image";
 interface Props {
   question: Question;
@@ -12,6 +12,17 @@ interface Props {
 export default function QuestionCard({
   question: { _id, title, tags, author, createdAt, upvotes, answers, views },
 }: Props) {
+  console.log("QuestionCard Props:", {
+    _id,
+    title,
+    tags,
+    author,
+    createdAt,
+    upvotes,
+    answers,
+    views,
+  });
+
   return (
     <div className="relative card-wrapper rounded-[10px] p-9 sm:px-11 overflow-hidden bg-white dark:bg-gray-900">
       <div className="absolute bottom-[-40px] right-[-50px] opacity-5 pointer-events-none">
@@ -49,7 +60,7 @@ export default function QuestionCard({
           imgUrl={author.image}
           alt={author.name}
           value={author.name}
-          title={`.asked ${getTimeStamp(createdAt)}`}
+          title={`• asked ${getTimeStamp(createdAt)}`}
           href={ROUTES.PROFILE(author._id)}
           textStyles="body-medium text-dark400_light700"
           isAuthor
