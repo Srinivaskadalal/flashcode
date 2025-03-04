@@ -36,6 +36,7 @@ interface StateSkeletonProps {
   };
 }
 
+const dummy = () => {};
 const StateSkeleton = ({
   image,
   title,
