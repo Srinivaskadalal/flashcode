@@ -71,8 +71,15 @@ export async function createQuestion(
     );
 
     await session.commitTransaction();
-
-    return { success: true, data: JSON.parse(JSON.stringify(question)) };
+    console.log("CreateQuestion API Response:", question);
+    return {
+      success: true,
+      data: {
+        ...JSON.parse(JSON.stringify(question)),
+        _id: question._id.toString(), // Ensure _id is a string
+        author: question.author.toString(), // Ensure author is a string
+      },
+    };
   } catch (error) {
     await session.abortTransaction();
     return handleError(error) as ErrorResponse;
@@ -178,8 +185,15 @@ export async function editQuestion(
 
     await question.save({ session });
     await session.commitTransaction();
-
-    return { success: true, data: JSON.parse(JSON.stringify(question)) };
+    console.log("editQuestion API Response:", question);
+    return {
+      success: true,
+      data: {
+        ...JSON.parse(JSON.stringify(question)),
+        _id: question._id.toString(), // Ensure _id is a string
+        author: question.author.toString(), // Ensure author is a string
+      },
+    };
   } catch (error) {
     await session.abortTransaction();
     return handleError(error) as ErrorResponse;
@@ -216,7 +230,7 @@ export async function getQuestion(
 }
 
 export async function getQuestions(
-  params: paginatedSearchParams
+  params: PaginatedSearchParams
 ): Promise<ActionResponse<{ questions: Question[]; isNext: boolean }>> {
   const validationResult = await action({
     params,

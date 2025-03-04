@@ -82,7 +82,7 @@ const UserAvatar = ({ id, name, imageUrl, className = "h-9 w-9" }: Props) => {
             quality={100}
           />
         ) : (
-          <AvatarFallback className="primary-gradient font-space-grotesk font-bold tracking-wider text-white">
+          <AvatarFallback className="primary-gradient2 font-space-grotesk font-bold tracking-wider text-white">
             {initials}
           </AvatarFallback>
         )}

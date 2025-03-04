@@ -89,9 +89,57 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
     }
   };
 
+  // const handleCreateQuestion = async (
+  //   data: z.infer<typeof AskQuestionSchema>
+  // ) => {
+  //   startTransition(async () => {
+  //     if (isEdit && question) {
+  //       const result = await editQuestion({
+  //         questionId: question?._id,
+  //         ...data,
+  //       });
+
+  //       if (result.success) {
+  //         toast({
+  //           title: "Success",
+  //           description: "Question updated successfully",
+  //         });
+
+  //         if (result.data) router.push(ROUTES.QUESTION(result.data._id));
+  //       } else {
+  //         toast({
+  //           title: `Error ${result.status}`,
+  //           description: result.error?.message || "Something went wrong",
+  //           variant: "destructive",
+  //         });
+  //       }
+
+  //       return;
+  //     }
+
+  //     const result = await createQuestion(data);
+
+  //     if (result.success) {
+  //       toast({
+  //         title: "Success",
+  //         description: "Question created successfully",
+  //       });
+
+  //       if (result.data) router.push(ROUTES.QUESTION(result.data._id));
+  //     } else {
+  //       toast({
+  //         title: `Error ${result.status}`,
+  //         description: result.error?.message || "Something went wrong",
+  //         variant: "destructive",
+  //       });
+  //     }
+  //   });
+  // };
   const handleCreateQuestion = async (
     data: z.infer<typeof AskQuestionSchema>
   ) => {
+    console.log("🟢 Submitting form data:", data); // Log form data
+
     startTransition(async () => {
       if (isEdit && question) {
         const result = await editQuestion({
@@ -99,13 +147,18 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           ...data,
         });
 
+        console.log("🟢 editQuestion API Response:", result); // Log API response
+
         if (result.success) {
           toast({
             title: "Success",
             description: "Question updated successfully",
           });
 
-          if (result.data) router.push(ROUTES.QUESTION(result.data._id));
+          if (result.data) {
+            console.log("🟢 Navigating to question:", result.data._id); // Check navigation ID
+            router.push(ROUTES.QUESTION(result.data._id));
+          }
         } else {
           toast({
             title: `Error ${result.status}`,
@@ -113,11 +166,12 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
             variant: "destructive",
           });
         }
-
         return;
       }
 
       const result = await createQuestion(data);
+
+      console.log("🟢 createQuestion API Response:", result); // Log API response
 
       if (result.success) {
         toast({
@@ -125,7 +179,10 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           description: "Question created successfully",
         });
 
-        if (result.data) router.push(ROUTES.QUESTION(result.data._id));
+        if (result.data) {
+          console.log("🟢 Navigating to question:", result.data._id); // Check navigation ID
+          router.push(ROUTES.QUESTION(result.data._id));
+        }
       } else {
         toast({
           title: `Error ${result.status}`,
@@ -233,7 +290,7 @@ const QuestionForm = ({ question, isEdit = false }: Params) => {
           <Button
             type="submit"
             disabled={isPending}
-            className="primary-gradient w-fit !text-light-900"
+            className="primary-gradient2 w-fit !text-light-900"
           >
             {isPending ? (
               <>
