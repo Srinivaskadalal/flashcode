@@ -4,8 +4,12 @@ import HomeFilter from "@/components/filters/HomeFilter";
 import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
+import { api } from "@/lib/api";
+import handleError from "@/lib/handlers/error";
+import { ValidationError } from "@/lib/http-errors";
 import Image from "next/image";
 import Link from "next/link";
+import { title } from "process";
 
 const questions = [
   {
@@ -101,13 +105,18 @@ const questions = [
   },
 ];
 
+// const test = async () => {
+//   try {
+//     return await api.users.getAll();
+//   } catch (error) {
+//     return handleError(error);
+//   }
+// };
+
 interface SearchParams {
-  searchParams: Promise<{ [Key: string]: string }>;
+  searchParams: Promise<{ [key: string]: string }>;
 }
 export default async function Home({ searchParams }: SearchParams) {
-  const session = await auth();
-  console.log(session);
-
   const { query = "", filter = "" } = await searchParams;
 
   const filteredQuestions = questions.filter((question) => {

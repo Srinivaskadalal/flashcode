@@ -9,11 +9,12 @@ import React from "react";
 
 export default function NavLinks({
   isMobileNav = false,
+  userId,
 }: {
   isMobileNav?: boolean;
+  userId?: string;
 }) {
   const pathname = usePathname();
-  const userId = 1;
 
   return (
     <>

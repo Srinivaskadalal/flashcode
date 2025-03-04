@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { Badge } from "../ui/badge";
 import { getDeviconClassName } from "@/lib/utils";
+import Image from "next/image";
 
 interface CardInterface {
   _id: string;
@@ -10,6 +11,9 @@ interface CardInterface {
   questions?: number;
   showCount?: boolean;
   compact?: boolean;
+  remove?: boolean;
+  isButton?: boolean;
+  handleRemove?: () => void;
 }
 
 const TagCard = ({
@@ -18,11 +22,19 @@ const TagCard = ({
   questions,
   showCount,
   compact,
+  remove,
+  isButton,
+  handleRemove,
 }: CardInterface) => {
   const iconClass = getDeviconClassName(name);
-  return (
-    <Link className="flex justify-between gap-2" href={ROUTES.TAGS(_id)}>
-      <Badge className="background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase">
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
+  const Content = (
+    <>
+      {" "}
+      <Badge className="background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase flex flex-row gap-2">
         <div className="flex-center space-x-2">
           {iconClass.startsWith("IMAGE:") ? (
             <img
@@ -35,15 +47,37 @@ const TagCard = ({
           )}
           <span>{name}</span>
         </div>
-      </Badge>
 
+        {remove && (
+          <Image
+            src="/icons/close.svg"
+            width={12}
+            height={12}
+            alt="close icon"
+            className="cursor-pointer object-contain invert-0 dark:invert"
+            onClick={handleRemove}
+          />
+        )}
+      </Badge>
       {showCount ? (
         <p className="small-medium text-dark500_light700">{questions}</p>
       ) : (
         <></>
       )}
-    </Link>
+    </>
   );
+  //
+  if (compact) {
+    return isButton ? (
+      <button className="flex justify-between gap-2" onClick={handleClick}>
+        {Content}
+      </button>
+    ) : (
+      <Link href={ROUTES.TAGS(_id)} className="flex justify-between gap-2">
+        {Content}
+      </Link>
+    );
+  }
 };
 
 export default TagCard;
