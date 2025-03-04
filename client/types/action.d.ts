@@ -27,3 +27,5 @@ interface EditQuestionParams extends CreateQuestionParams {
 interface GetQuestionParams {
   questionId: string;
 }
+
+// Updates
