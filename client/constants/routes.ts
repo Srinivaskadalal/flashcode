@@ -3,10 +3,15 @@ const ROUTES = {
   SIGN_IN: "/sign-in",
   SIGN_UP: "/sign-up",
   ASK_FLASH: "/flash-ask",
-  QUESTION: (id: string) => `/question/${id}`,
+  COLLECTION: "/flash-collection",
+  COMMUNITY: "/flash-community",
+  TAGS: "/flash-tags",
+  JOBS: "/flash-employment",
+
+  QUESTION: (id: string) => `/questions/${id}`,
   PROFILE: (id: string) => `/profile/${id}`,
 
-  TAGS: (id: string) => `/tags/${id}`,
+  TAG: (id: string) => `/tags/${id}`,
   SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
 };
 
