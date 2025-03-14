@@ -22,9 +22,9 @@ export const DEFAULT_ERROR = {
 export const EMPTY_QUESTION = {
   title: "Ahh, No Questions Yet!",
   message:
-    "Flashcode is empty 🫙. Maybe it’s waiting for your smart question to start the talk!",
+    "The question board is empty. Maybe it’s waiting for your brilliant question to get things rolling",
   button: {
-    text: "Ask Flashes",
+    text: "Ask a Question",
     href: ROUTES.ASK_FLASH,
   },
 };
@@ -34,7 +34,7 @@ export const EMPTY_TAGS = {
   message: "The tag cloud is empty. Add some keywords to make it rain.",
   button: {
     text: "Create Tag",
-    href: ROUTES.TAG,
+    href: ROUTES.TAGS,
   },
 };
 
