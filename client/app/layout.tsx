@@ -12,6 +12,12 @@ const montserrat = localFont({
   variable: "--font-montserrat",
   weight: "100 200 300 400 500 600 700 800 900",
 });
+export const pacifico = localFont({
+  src: "./fonts/Pacifico-Regular.ttf", // Adjust the path if needed
+  variable: "--font-pacifico",
+  weight: "400", // Adjust based on the font’s available weights
+  style: "normal",
+});
 
 const spaceGrotesk = localFont({
   src: "./fonts/SpaceGroteskVF.ttf",
@@ -46,7 +52,7 @@ export default async function RootLayout({
 
       <SessionProvider session={session}>
         <body
-          className={`${montserrat.className} ${spaceGrotesk.variable} antialiased`}
+          className={`${montserrat.className} ${spaceGrotesk.variable} ${pacifico.variable} antialiased`}
         >
           <ThemeProvider
             attribute="class"

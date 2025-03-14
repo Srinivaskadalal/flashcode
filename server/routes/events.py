@@ -5,7 +5,7 @@ from bson import ObjectId
 
 bp = Blueprint("events", __name__, url_prefix="/events")
 
-# ✅ Get Upcoming Events (Next 30 Days)
+
 @bp.route("/", methods=["GET"])
 def get_upcoming_events():
     today = datetime.now().strftime("%Y-%m-%d")
@@ -21,7 +21,7 @@ def get_upcoming_events():
         return jsonify({"error": f"Database error: {str(e)}"}), 500
 
 
-# ✅ Add a New Event
+
 @bp.route("/post", methods=["POST"])
 def add_event():
     data = request.json
@@ -30,24 +30,24 @@ def add_event():
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing fields"}), 400
 
-    # Validate Date
+    
     try:
         datetime.strptime(data["date"], "%Y-%m-%d")
     except ValueError:
         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
 
-    # Validate Time
+ 
     try:
         datetime.strptime(data["time"], "%I:%M %p")
     except ValueError:
         return jsonify({"error": "Invalid time format. Use HH:MM AM/PM (e.g., 06:30 PM)"}), 400
 
-    # Validate URL Format
+  
     from urllib.parse import urlparse
     if not urlparse(data["link"]).scheme:
         return jsonify({"error": "Invalid link format"}), 400
 
-    # Insert event into database
+   
     try:
         events_collection.insert_one(data)
         return jsonify({"message": "Event added successfully!"}), 201
@@ -55,7 +55,6 @@ def add_event():
         return jsonify({"error": f"Database error: {str(e)}"}), 500
 
 
-# ✅ Update an Event
 @bp.route("/update/<event_id>", methods=["PUT"])
 def update_event(event_id):
     data = request.json
@@ -64,30 +63,29 @@ def update_event(event_id):
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing fields"}), 400
 
-    # Validate Date
     try:
         datetime.strptime(data["date"], "%Y-%m-%d")
     except ValueError:
         return jsonify({"error": "Invalid date format. Use YYYY-MM-DD"}), 400
 
-    # Validate Time
+
     try:
         datetime.strptime(data["time"], "%I:%M %p")
     except ValueError:
         return jsonify({"error": "Invalid time format. Use HH:MM AM/PM (e.g., 06:30 PM)"}), 400
 
-    # Validate URL Format
+  
     from urllib.parse import urlparse
     if not urlparse(data["link"]).scheme:
         return jsonify({"error": "Invalid link format"}), 400
 
-    # Validate ObjectId format
+    
     try:
         obj_id = ObjectId(event_id)
     except:
         return jsonify({"error": "Invalid event ID"}), 400
 
-    # Update event in database
+
     try:
         result = events_collection.update_one({"_id": obj_id}, {"$set": data})
 
@@ -99,11 +97,11 @@ def update_event(event_id):
         return jsonify({"error": f"Database error: {str(e)}"}), 500
 
 
-# ✅ Delete an Event by ID
+
 @bp.route("/delete/<event_id>", methods=["DELETE"])
 def delete_event(event_id):
     try:
-        obj_id = ObjectId(event_id)  # Validate ObjectId
+        obj_id = ObjectId(event_id)  
     except:
         return jsonify({"error": "Invalid event ID"}), 400
 

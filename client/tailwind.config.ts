@@ -44,6 +44,7 @@ const config: Config = {
       fontFamily: {
         montserrat: ["var(--font-montserrat)"],
         "space-grotesk": ["var(--font-space-grotesk)"],
+        pacifico: ["var(--font-pacifico)"],
       },
       borderRadius: {
         "2": "8px",

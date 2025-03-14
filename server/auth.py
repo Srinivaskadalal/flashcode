@@ -6,22 +6,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("NEXTAUTH_SECRET", "your-secret-key")  # Must match NextAuth
+SECRET_KEY = os.getenv("NEXTAUTH_SECRET", "your-secret-key") 
 
-# ✅ Middleware to protect routes
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         token = None
         if "Authorization" in request.headers:
-            token = request.headers["Authorization"].split(" ")[1]  # Extract token
+            token = request.headers["Authorization"].split(" ")[1] 
 
         if not token:
             return jsonify({"error": "Authentication token is missing!"}), 401
 
         try:
             decoded_token = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            request.user = decoded_token  # Attach user info to request
+            request.user = decoded_token 
         except jwt.ExpiredSignatureError:
             return jsonify({"error": "Token expired!"}), 401
         except jwt.InvalidTokenError:

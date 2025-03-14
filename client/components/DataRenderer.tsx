@@ -67,7 +67,7 @@ const StateSkeleton = ({
     </p>
     {button && (
       <Link href={button.href}>
-        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 hover:bg-primary-500">
+        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg primary-gradient2  px-4 py-3 text-light-900 hover:bg-primary-500">
           {button.text}
         </Button>
       </Link>
@@ -86,8 +86,8 @@ const DataRenderer = <T,>({
     return (
       <StateSkeleton
         image={{
-          light: "/images/light-error.png",
-          dark: "/images/dark-error.png",
+          light: "/bg-illu.png",
+          dark: "/dark-illu.svg",
           alt: "Error state illustration",
         }}
         title={error?.message || DEFAULT_ERROR.title}
@@ -107,8 +107,8 @@ const DataRenderer = <T,>({
     return (
       <StateSkeleton
         image={{
-          light: "/images/light-illu.png",
-          dark: "/images/dark-illu.png",
+          light: "/data_light.svg",
+          dark: "/data.jpg",
           alt: "Empty state illustration",
         }}
         title={empty.title}
