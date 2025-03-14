@@ -22,9 +22,9 @@ export const DEFAULT_ERROR = {
 export const EMPTY_QUESTION = {
   title: "Ahh, No Questions Yet!",
   message:
-    "The question board is empty. Maybe it’s waiting for your brilliant question to get things rolling",
+    "Flashcode is empty 🫙. Maybe it’s waiting for your smart question to start the talk!",
   button: {
-    text: "Ask a Question",
+    text: "Ask Flashes",
     href: ROUTES.ASK_FLASH,
   },
 };
