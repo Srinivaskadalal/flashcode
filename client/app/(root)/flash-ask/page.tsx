@@ -10,14 +10,21 @@ const AskAQuestion = async () => {
 
   if (!session) return redirect("/sign-in");
   return (
-    <>
-      <h2 className="font-pacifico text-2xl text-center text-blue-900">
+    <section>
+      {/* <h2 className="font-pacifico text-2xl text-center text-blue-900 dark:text-yellow-400">
         It All Starts Here
-      </h2>
+      </h2> */}
+      <div className="text-center">
+        <h2 className="font-pacifico text-3xl text-blue-900 dark:text-white">
+          It All Starts Here
+        </h2>
+
+        <div className="mt-3 w-16 border-b-4 border-blue-900 dark:border-yellow-400 mx-auto"></div>
+      </div>
       <div className="mt-9">
         <QuestionForm />
       </div>
-    </>
+    </section>
   );
 };
 
