@@ -15,9 +15,9 @@ export const sidebarLinks = [
     label: "Collections",
   },
   {
-    imgURL: "/icons/suitcase.svg",
+    imgURL: "/icons/exclusive.svg",
     route: "/flash-employment",
-    label: "Find Jobs",
+    label: "KentX",
   },
   {
     imgURL: "/icons/tag.svg",
