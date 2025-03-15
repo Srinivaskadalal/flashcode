@@ -11,7 +11,7 @@ const ROUTES = {
   QUESTION: (id: string) => `/questions/${id}`,
   PROFILE: (id: string) => `/profile/${id}`,
 
-  TAG: (id: string) => `/tags/${id}`,
+  TAG: (id: string) => `/flash-tags/${id}`,
   SIGN_IN_WITH_OAUTH: `signin-with-oauth`,
 };
 

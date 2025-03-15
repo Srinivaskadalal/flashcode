@@ -74,7 +74,7 @@ const RightSidebar = () => {
       <UpcomingEvents />
       <CodingChallenges />
       <hr />
-      <div className="mt-16">
+      {/* <div className="mt-16">
         <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
 
         <div className="mt-7 flex flex-col gap-4">
@@ -88,8 +88,30 @@ const RightSidebar = () => {
               compact
             />
           ))}
-        </div>
-      </div>
+          </div> 
+        
+
+      </div> */}
+      <div className="mt-16 w-full">
+  <h3 className="h3-bold text-dark200_light900">Popular Tags</h3>
+
+  {/* Container ensuring the size is consistent with other sidebar components */}
+  <div className="mt-5 w-full bg-light-200 dark:bg-dark-500 rounded-lg p-4 shadow-md border border-gray-300 dark:border-gray-600">
+    <div className="flex flex-wrap gap-3 justify-start">
+      {kentStateTags.map(({ _id, title, questions }) => (
+        <TagCard
+          key={_id}
+          _id={_id}
+          name={title}
+          questions={questions}
+          showCount
+          inline
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
     </section>
   );
 };

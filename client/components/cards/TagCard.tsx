@@ -11,6 +11,7 @@ interface CardInterface {
   questions?: number;
   showCount?: boolean;
   compact?: boolean;
+  inline?:boolean;
   remove?: boolean;
   isButton?: boolean;
   handleRemove?: () => void;
@@ -22,6 +23,7 @@ const TagCard = ({
   questions,
   showCount,
   compact,
+  inline,
   remove,
   isButton,
   handleRemove,
@@ -79,6 +81,18 @@ const TagCard = ({
 
   // Compact Layout
   if (compact) {
+    return isButton ? (
+      <button className="flex justify-between gap-2" onClick={handleClick}>
+        {Content}
+      </button>
+    ) : (
+      <Link href={ROUTES.TAG(_id)} className="flex justify-between gap-2">
+        {Content}
+      </Link>
+    );
+  }
+  // Compact Layout
+  if (inline) {
     return isButton ? (
       <button className="flex justify-between gap-2" onClick={handleClick}>
         {Content}
