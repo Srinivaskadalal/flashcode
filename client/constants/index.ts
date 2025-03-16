@@ -15,8 +15,8 @@ export const sidebarLinks = [
     label: "Collections",
   },
   {
-    imgURL: "/icons/exclusive.svg",
-    route: "/flash-employment",
+    imgURL: "/kent.svg",
+    route: "/kent",
     label: "KentX",
   },
   {

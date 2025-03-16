@@ -7,6 +7,8 @@ const ROUTES = {
   COMMUNITY: "/flash-community",
   TAGS: "/flash-tags",
   JOBS: "/flash-employment",
+  KENT: "/kent",
+  BLOG: "/blog",
 
   QUESTION: (id: string) => `/questions/${id}`,
   PROFILE: (id: string) => `/profile/${id}`,

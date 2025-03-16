@@ -39,7 +39,6 @@ export default async function Home({ searchParams }: SearchParams) {
           <Link href={ROUTES.ASK_FLASH}>Ask Flashes</Link>
         </Button>
       </section>
-
       <section className="mt-11">
         <LocalSearch
           route="/"
@@ -49,7 +48,6 @@ export default async function Home({ searchParams }: SearchParams) {
         />
       </section>
       <HomeFilter />
-
       <DataRenderer
         success={success}
         error={error}
@@ -63,6 +61,61 @@ export default async function Home({ searchParams }: SearchParams) {
           </div>
         )}
       />
+
+      <footer className="mt-16 w-full bg-light-100 dark:bg-dark-800 p-6 text-center border-t border-gray-300 dark:border-dark-600">
+        <div className="container mx-auto px-4">
+          {/* Flashcode Branding */}
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+            ⚡ Flashcode - Built for Better
+          </h3>
+
+          {/* Responsive Navigation Links */}
+          <div className="mt-4 flex flex-wrap justify-center gap-4 sm:gap-6 sm:flex-row flex-col md:flex-row">
+            <Link
+              href="/about"
+              className="text-gray-600 dark:text-gray-400 hover:text-primary"
+            >
+              About
+            </Link>
+            <Link
+              href="/support"
+              className="text-gray-600 dark:text-gray-400 hover:text-primary"
+            >
+              Support
+            </Link>
+            <Link
+              href={ROUTES.JOBS}
+              className="text-gray-600 dark:text-gray-400 hover:text-primary"
+            >
+              Student Opportunities
+            </Link>
+            <Link
+              href={ROUTES.BLOG}
+              className="text-gray-600 dark:text-gray-400 hover:text-primary"
+            >
+              Insights & Stories
+            </Link>
+            <Link
+              href="https://twitter.com/yourhandle"
+              target="_blank"
+              className="text-gray-600 dark:text-gray-400 hover:text-primary"
+            >
+              X (Twitter)
+            </Link>
+            <Link
+              href="/contact"
+              className="text-gray-600 dark:text-gray-400 hover:text-primary"
+            >
+              Contact
+            </Link>
+          </div>
+
+          {/* Copyright Text */}
+          <p className="mt-4 text-xs text-gray-500 dark:text-gray-500">
+            © {new Date().getFullYear()} Flashcode. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </>
   );
 }
