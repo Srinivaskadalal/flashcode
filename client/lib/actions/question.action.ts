@@ -12,8 +12,10 @@ import {
   AskQuestionSchema,
   EditQuestionSchema,
   GetQuestionSchema,
+  IncrementViewsSchema,
   PaginatedSearchParamsSchema,
 } from "../validations";
+import ROUTES from "@/constants/routes";
 
 export async function createQuestion(
   params: CreateQuestionParams
@@ -201,6 +203,103 @@ export async function editQuestion(
     await session.endSession();
   }
 }
+// export async function getQuestion(
+//   params: GetQuestionParams
+// ): Promise<ActionResponse<Question>> {
+//   const validationResult = await action({
+//     params,
+//     schema: GetQuestionSchema,
+//     authorize: true,
+//   });
+
+//   if (validationResult instanceof Error) {
+//     return handleError(validationResult) as ErrorResponse;
+//   }
+
+//   const { questionId } = validationResult.params!;
+
+//   try {
+//     const question = await Question.findById(questionId)
+//       .populate("tags")
+//       .populate("author", "_id name image");
+
+//     if (!question) {
+//       throw new Error("Question not found");
+//     }
+
+//     return { success: true, data: JSON.parse(JSON.stringify(question)) };
+//   } catch (error) {
+//     return handleError(error) as ErrorResponse;
+//   }
+// }
+
+// export async function getQuestions(
+//   params: PaginatedSearchParams
+// ): Promise<ActionResponse<{ questions: Question[]; isNext: boolean }>> {
+//   const validationResult = await action({
+//     params,
+//     schema: PaginatedSearchParamsSchema,
+//   });
+
+//   if (validationResult instanceof Error) {
+//     return handleError(validationResult) as ErrorResponse;
+//   }
+
+//   const { page = 1, pageSize = 10, query, filter } = params;
+//   const skip = (Number(page) - 1) * pageSize;
+//   const limit = Number(pageSize);
+
+//   const filterQuery: FilterQuery<typeof Question> = {};
+
+//   if (filter === "recommended") {
+//     return { success: true, data: { questions: [], isNext: false } };
+//   }
+
+//   if (query) {
+//     filterQuery.$or = [
+//       { title: { $regex: new RegExp(query, "i") } },
+//       { content: { $regex: new RegExp(query, "i") } },
+//     ];
+//   }
+
+//   let sortCriteria = {};
+
+//   switch (filter) {
+//     case "newest":
+//       sortCriteria = { createdAt: -1 };
+//       break;
+//     case "unanswered":
+//       filterQuery.answers = 0;
+//       sortCriteria = { createdAt: -1 };
+//       break;
+//     case "popular":
+//       sortCriteria = { upvotes: -1 };
+//       break;
+//     default:
+//       sortCriteria = { createdAt: -1 };
+//       break;
+//   }
+//   try {
+//     const totalQuestions = await Question.countDocuments(filterQuery);
+
+//     const questions = await Question.find(filterQuery)
+//       .populate("tags", "name")
+//       .populate("author", "name image")
+//       .lean()
+//       .sort(sortCriteria)
+//       .skip(skip)
+//       .limit(limit);
+
+//     const isNext = totalQuestions > skip + questions.length;
+
+//     return {
+//       success: true,
+//       data: { questions: JSON.parse(JSON.stringify(questions)), isNext },
+//     };
+//   } catch (error) {
+//     return handleError(error) as ErrorResponse;
+//   }
+// }
 export async function getQuestion(
   params: GetQuestionParams
 ): Promise<ActionResponse<Question>> {
@@ -217,13 +316,18 @@ export async function getQuestion(
   const { questionId } = validationResult.params!;
 
   try {
-    const question = await Question.findById(questionId).populate("tags");
+    const question = await Question.findById(questionId)
+      .populate("tags")
+      .populate("author", "_id name image")
+      .lean<Question>(); // ✅ Ensure proper typing
 
     if (!question) {
       throw new Error("Question not found");
     }
 
-    return { success: true, data: JSON.parse(JSON.stringify(question)) };
+    console.log("Final API Response:", JSON.stringify(question, null, 2)); // ✅ Debugging Log
+
+    return { success: true, data: question };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
@@ -275,6 +379,7 @@ export async function getQuestions(
       sortCriteria = { createdAt: -1 };
       break;
   }
+
   try {
     const totalQuestions = await Question.countDocuments(filterQuery);
 
@@ -291,6 +396,39 @@ export async function getQuestions(
     return {
       success: true,
       data: { questions: JSON.parse(JSON.stringify(questions)), isNext },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+export async function incrementViews(
+  params: IncrementViewsParams
+): Promise<ActionResponse<{ views: number }>> {
+  const validationResult = await action({
+    params,
+    schema: IncrementViewsSchema,
+  });
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { questionId } = validationResult.params!;
+
+  try {
+    const question = await Question.findById(questionId);
+
+    if (!question) {
+      throw new Error("Question not found");
+    }
+
+    question.views += 1;
+
+    await question.save();
+
+    return {
+      success: true,
+      data: { views: question.views },
     };
   } catch (error) {
     return handleError(error) as ErrorResponse;
