@@ -1,4 +1,5 @@
 "use client";
+import AddScheduleForm from "@/components/forms/AddScheduleForm";
 import Link from "next/link";
 import React, { useState } from "react";
 const magazines = [
@@ -63,34 +64,6 @@ const page = () => {
   const [selectedTab, setSelectedTab] = useState("Spring2025");
 
   return (
-    // <div className="flex  justify-center h-screen text-center">
-    //   <h1 className="text-6xl font-extrabold uppercase text-blue-900 tracking-wide font-playfair-display">
-    //     YOU <span className="text-yellow-500">BELONG</span> HERE
-    //   </h1>
-    // </div>
-    // <div className="relative flex flex-col items-center justify-center h-screen text-center bg-white">
-    //   {/* Main Heading */}
-    //   <h1 className="text-6xl font-extrabold uppercase text-blue-900 tracking-wide font-playfair-display relative">
-    //     YOU <span className="text-yellow-500">BELONG</span> HERE
-    //   </h1>
-
-    //   {/* Decorative Lines */}
-    //   <div className="mt-4 w-32 h-1 bg-yellow-500"></div>
-    //   <div className="mt-2 w-48 h-1 bg-blue-900"></div>
-
-    //   {/* Subtitle */}
-    //   <p className="mt-6 text-lg text-gray-700 font-medium max-w-xl">
-    //     Join the Kent State University community and be part of something
-    //     extraordinary.
-    //   </p>
-
-    //   {/* Bottom Design Elements */}
-    //   <div className="absolute bottom-10 flex space-x-4">
-    //     <div className="w-12 h-12 bg-yellow-500 rounded-full opacity-50"></div>
-    //     <div className="w-16 h-16 bg-blue-900 rounded-full opacity-30"></div>
-    //     <div className="w-10 h-10 bg-yellow-500 rounded-full opacity-50"></div>
-    //   </div>
-    // </div>
     <>
       <div className="relative flex flex-col items-start justify-start  text-left bg-white dark:bg-black px-16 ">
         {/* Main Heading */}
@@ -287,6 +260,7 @@ const page = () => {
           </table>
         </div>
       </div>
+      <AddScheduleForm />
     </>
   );
 };
