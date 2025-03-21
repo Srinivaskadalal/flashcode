@@ -6,7 +6,8 @@ Code.theme = {
   dark: "github-dark",
   lightSelector: "html.light",
 };
-const Preview = ({ content = "" }: { content: string }) => {
+
+export const Preview = ({ content }: { content: string }) => {
   const formattedContent = content.replace(/\\/g, "").replace(/&#x20;/g, "");
 
   return (
@@ -26,5 +27,3 @@ const Preview = ({ content = "" }: { content: string }) => {
     </section>
   );
 };
-
-export default Preview;
