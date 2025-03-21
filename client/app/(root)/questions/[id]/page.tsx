@@ -1,64 +1,260 @@
-import TagCard from "@/components/cards/TagCard";
-import Preview from "@/components/editor/Preview";
-import Metric from "@/components/Metric";
-import UserAvatar from "@/components/UserAvatar";
-import ROUTES from "@/constants/routes";
-import { getQuestion, incrementViews } from "@/lib/actions/question.action";
-import { formatNumber, getTimeStamp } from "@/lib/utils";
+// import AllAnswers from "@/components/answers/AllAnswers";
+// import TagCard from "@/components/cards/TagCard";
+// import { Preview } from "@/components/editor/Preview";
+// import AnswerForm from "@/components/forms/AnswerForm";
+// import Metric from "@/components/Metric";
+// import UserAvatar from "@/components/UserAvatar";
+// import Votes from "@/components/votes/Votes";
+
+// import ROUTES from "@/constants/routes";
+// import { getAnswers } from "@/lib/actions/answer.action";
+// import { getQuestion, incrementViews } from "@/lib/actions/question.action";
+// import { hasVoted } from "@/lib/actions/vote.action";
+// import { formatNumber, getTimeStamp } from "@/lib/utils";
+// import Link from "next/link";
+// import { redirect } from "next/navigation";
+// import { after } from "next/server";
+// import React, { Suspense } from "react";
+
+// const QuestionDetails = async ({ params }: RouteParams) => {
+//   const { id } = await params;
+
+//   console.log("Fetching question with ID:", id);
+
+//   const { success, data: question } = await getQuestion({ questionId: id });
+
+//   console.log("API Response:", { success, question });
+
+//   after(async () => {
+//     await incrementViews({ questionId: id });
+//   });
+
+//   if (!success || !question) {
+//     console.log("Redirecting due to missing question data");
+//     return redirect("/404");
+//   }
+
+//   const {
+//     success: areAnswersLoaded,
+//     data: answersResult,
+//     error: answersError,
+//   } = await getAnswers({
+//     questionId: id,
+//     page: 1,
+//     pageSize: 10,
+//     filter: "latest",
+//   });
+
+//   const hasVotedPromise = hasVoted({
+//     targetId: String(question._id), // ✅ FIXED
+//     targetType: "question",
+//   });
+
+//   const { author, createdAt, answers, views, tags, content, title } = question;
+
+//   // ✅ Ensure content is a valid string and remove `import`/`export` statements
+//   const safeContent =
+//     typeof content === "string"
+//       ? content
+//           .replace(/\{/g, "&#123;") // Escape `{`
+//           .replace(/\}/g, "&#125;") // Escape `}`
+//           .replace(/^import\s+.*$/gm, "") // Remove import statements
+//           .replace(/^export\s+.*$/gm, "") // Remove export statements
+//       : "No content available.";
+
+//   console.log("Sanitized MDX Content:", safeContent); // Debugging
+
+//   return (
+//     <>
+//       <div className="flex-stat w-full flex-col">
+//         <div className="flex w-full flex-col-reverse justify-between">
+//           <div className="flex items-center justify-start gap-1">
+//             <UserAvatar
+//               id={author?._id ?? "unknown"}
+//               name={author?.name ?? "Unknown User"}
+//               className="size-[22px]"
+//               fallbackClassName="text-[10px]"
+//               imageUrl={author?.image ?? null}
+//             />
+
+//             <Link href={author?._id ? ROUTES.PROFILE(author._id) : "#"}>
+//               <p className="paragraph-semibold text-dark300_light700">
+//                 {author?.name ?? "Unknown User"}
+//               </p>
+//             </Link>
+//           </div>
+
+//           <div className="flex justify-end ">
+//             <Suspense fallback={<div>Loading...</div>}>
+//               <Votes
+//                 targetType="question"
+//                 upvotes={question.upvotes}
+//                 downvotes={question.downvotes}
+//                 targetId={Stringconst hasVotedPromise(question._id)}
+//                 hasVotedPromise={hasVotedPromise}
+//               />
+//             </Suspense>
+//           </div>
+//         </div>
+//         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full">
+//           {title}
+//         </h2>
+//       </div>
+//       <div className="mb-8 mt-5 flex flex-wrap gap-4">
+//         <Metric
+//           imgUrl="/icons/clock.svg"
+//           alt="clock icon"
+//           value={` asked ${getTimeStamp(new Date(createdAt))}`}
+//           title=""
+//           textStyles="small-regular text-dark400_light700"
+//         />
+//         <Metric
+//           imgUrl="/icons/message.svg"
+//           alt="message icon"
+//           value={answers}
+//           title=""
+//           textStyles="small-regular text-dark400_light700"
+//         />
+//         <Metric
+//           imgUrl="/icons/eye.svg"
+//           alt="eye icon"
+//           value={formatNumber(views)}
+//           title=""
+//           textStyles="small-regular text-dark400_light700"
+//         />
+//       </div>
+
+//       <Preview content={safeContent} />
+
+//       <div className="mt-8 flex flex-wrap gap-2">
+//         {tags.map((tag: Tag) => (
+//           <TagCard
+//             key={String(tag._id)}
+//             _id={String(tag._id)}
+//             name={tag.name}
+//             compact
+//           />
+//         ))}
+//       </div>
+
+//       <section className="my-5 max-w-full">
+//         <AllAnswers
+//           data={answersResult?.answers}
+//           success={areAnswersLoaded}
+//           error={answersError}
+//           totalAnswers={answersResult?.totalAnswers || 0}
+//         />
+//       </section>
+
+//       <section className="my-5">
+//         <AnswerForm
+//           questionId={String(question._id)}
+//           // questionTitle={question.title}
+//           // questionContent={question.content}
+//         />
+//       </section>
+//     </>
+//   );
+// };
+
+// export default QuestionDetails;
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
-import React from "react";
+import React, { Suspense } from "react";
+
+import AllAnswers from "@/components/answers/AllAnswers";
+import TagCard from "@/components/cards/TagCard";
+import { Preview } from "@/components/editor/Preview";
+import AnswerForm from "@/components/forms/AnswerForm";
+import Metric from "@/components/Metric";
+import UserAvatar from "@/components/UserAvatar";
+import Votes from "@/components/votes/Votes";
+import ROUTES from "@/constants/routes";
+import { getAnswers } from "@/lib/actions/answer.action";
+import { getQuestion, incrementViews } from "@/lib/actions/question.action";
+import { hasVoted } from "@/lib/actions/vote.action";
+import { formatNumber, getTimeStamp } from "@/lib/utils";
+import SaveQuestion from "@/components/questions/SaveQuestion";
+import { hasSavedQuestion } from "@/lib/actions/collection.action";
 
 const QuestionDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
-
-  console.log("Fetching question with ID:", id);
-
   const { success, data: question } = await getQuestion({ questionId: id });
-
-  console.log("API Response:", { success, question }); // ✅ Log the API response
 
   after(async () => {
     await incrementViews({ questionId: id });
   });
-  if (!success || !question) {
-    console.log("Redirecting due to missing question data");
-    return redirect("/404");
-  }
 
+  if (!success || !question) return redirect("/404");
+
+  const {
+    success: areAnswersLoaded,
+    data: answersResult,
+    error: answersError,
+  } = await getAnswers({
+    questionId: id,
+    page: 1,
+    pageSize: 10,
+    filter: "latest",
+  });
+
+  const hasVotedPromise = hasVoted({
+    targetId: question._id.toString(),
+
+    targetType: "question",
+  });
+
+  const hasSavedQuestionPromise = hasSavedQuestion({
+    questionId: question._id.toString(),
+  });
   const { author, createdAt, answers, views, tags, content, title } = question;
-
-  console.log("API Response:", JSON.stringify({ success, question }, null, 2));
+  console.log("Author Info:", author);
 
   return (
     <>
-      <div className="flex-stat w-full flex-col">
+      <div className="flex-start w-full flex-col">
         <div className="flex w-full flex-col-reverse justify-between">
           <div className="flex items-center justify-start gap-1">
             <UserAvatar
-              id={author?._id ?? "unknown"}
-              name={author?.name ?? "Unknown User"}
+              id={author._id}
+              name={author.name}
+              imageUrl={author.image}
               className="size-[22px]"
               fallbackClassName="text-[10px]"
-              imageUrl={author?.image ?? null}
             />
-
-            <Link href={author?._id ? ROUTES.PROFILE(author._id) : "#"}>
+            <Link href={ROUTES.PROFILE(author._id)}>
               <p className="paragraph-semibold text-dark300_light700">
-                {author?.name ?? "Unknown User"}
+                {author.name}
               </p>
             </Link>
           </div>
 
-          <div className="flex justify-end ">
-            <p>Votes</p>
+          <div className="flex justify-end items-center gap-4">
+            <Suspense fallback={<div>Loading...</div>}>
+              <Votes
+                targetType="question"
+                upvotes={question.upvotes}
+                downvotes={question.downvotes}
+                targetId={question._id.toString()} // ✅ Convert to plain string
+                hasVotedPromise={hasVotedPromise}
+              />
+            </Suspense>
+
+            <Suspense fallback={<div>Loading...</div>}>
+              <SaveQuestion
+                questionId={question._id.toString()}
+                hasSavedQuestionPromise={hasSavedQuestionPromise}
+              />
+            </Suspense>
           </div>
         </div>
+
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full">
           {title}
         </h2>
       </div>
+
       <div className="mb-8 mt-5 flex flex-wrap gap-4">
         <Metric
           imgUrl="/icons/clock.svg"
@@ -82,6 +278,7 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           textStyles="small-regular text-dark400_light700"
         />
       </div>
+
       <Preview content={content} />
 
       <div className="mt-8 flex flex-wrap gap-2">
@@ -94,6 +291,23 @@ const QuestionDetails = async ({ params }: RouteParams) => {
           />
         ))}
       </div>
+
+      <section className="my-5">
+        <AllAnswers
+          data={answersResult?.answers}
+          success={areAnswersLoaded}
+          error={answersError}
+          totalAnswers={answersResult?.totalAnswers || 0}
+        />
+      </section>
+
+      <section className="my-5">
+        <AnswerForm
+          questionId={String(question._id)}
+          questionTitle={question.title}
+          questionContent={question.content}
+        />
+      </section>
     </>
   );
 };

@@ -17,6 +17,7 @@ interface Question {
   author: Author;
   createdAt: Date;
   upvotes: number;
+  downvotes: number;
   answers: number;
   views: number;
   createdAt: Date;
@@ -48,4 +49,18 @@ interface PaginatedSearchParams {
   query?: string;
   filter?: string;
   sort?: string;
+}
+
+interface Answer {
+  _id: string;
+  author: Author;
+  content: string;
+  createdAt: Date;
+  upvotes: number;
+  downvotes: number;
+}
+interface Collection {
+  _id: string;
+  author: string | Author;
+  question: Question;
 }

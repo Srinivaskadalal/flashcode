@@ -17,8 +17,7 @@ export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter(); // ✅ Use Next.js router to navigate
-
+  const router = useRouter();
   useEffect(() => {
     fetch("http://127.0.0.1:5000/events") // Fetch from Flask API
       .then((res) => res.json())
