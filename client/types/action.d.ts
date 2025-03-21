@@ -28,8 +28,12 @@ interface GetQuestionParams {
   questionId: string;
 }
 
-interface GetTagQuestionsParams extends Omit<PaginatedSearchParams, "filter"> {
+// interface GetTagQuestionsParams extends Omit<PaginatedSearchParams, "filter"> {
+//   tagId: string;
+// }
+interface GetTagQuestionsParams extends PaginatedSearchParams {
   tagId: string;
+  q;
 }
 
 interface IncrementViewsParams {
