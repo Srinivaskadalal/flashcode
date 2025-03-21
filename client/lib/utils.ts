@@ -401,6 +401,10 @@ export const techDescriptionMap: { [key: string]: string } = {
   kentst:
     "Kent St. is a shorthand for Kent State University, a prominent Ohio institution.",
   ks: "KS is a brief abbreviation for Kent State University, recognized for its academic impact.",
+
+  // parta
+  parta:
+    "Portage Area Regional Transportation Authority (PARTA) provides public transportation services in Portage County, Ohio, including fixed-route buses and demand-response services",
 };
 
 export const getTechDescription = (techName: string) => {
@@ -438,8 +442,12 @@ export const getDeviconClassName = (techName: string): string => {
     return "IMAGE:/kent.svg";
   }
 
-  // Step 3: Direct match
+  const other = ["parts"];
+  if (other.some((name) => normalizedTechName.includes(name))) {
+    return "IMAGE:/parta.jpeg";
+  }
   if (techMap[normalizedTechName]) {
+    // Step 3: Direct match
     return `${techMap[normalizedTechName]} colored`;
   }
 

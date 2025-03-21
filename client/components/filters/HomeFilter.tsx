@@ -10,8 +10,6 @@ const filters = [
   { name: "Popular", value: "popular" },
   { name: "Unanswered", value: "unanswered" },
   { name: "Recommended", value: "recommended" },
-  { name: "Java", value: "java" },
-  { name: "Sql", value: "sql" },
 ];
 const HomeFilter = () => {
   const router = useRouter();
