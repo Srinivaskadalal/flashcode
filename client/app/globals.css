@@ -284,8 +284,21 @@ body {
     @apply prose max-w-full prose-p:m-0 dark:prose-headings:text-white prose-headings:text-dark-400 prose-p:text-dark-500 dark:prose-p:text-light-700 prose-ul:text-dark-500 dark:prose-ul:text-light-700 prose-ol:text-dark-500 dark:prose-ol:text-light-700 dark:prose-strong:text-white prose-blockquote:text-dark-500 dark:prose-blockquote:text-light-700;
   }
 
-  .tab {
+  /* .tab {
     @apply min-h-full dark:bg-dark-400 bg-light-800 text-light-500 dark:data-[state=active]:bg-dark-300 data-[state=active]:bg-primary-100 data-[state=active]:text-primary-500 !important;
+  } */
+  .tab {
+    @apply min-h-full dark:bg-dark-400 bg-light-800 text-light-500 !important;
+  }
+
+  /* Active state override */
+  /* .tab[data-state="active"] {
+    background: linear-gradient(to right, #f0f9ff, #e0f2ff) !important;
+    color: #1e40af !important;
+  } */
+  .tab[data-state="active"] {
+    background: linear-gradient(to right, #e0f2fe, #c7d2fe) !important;
+    color: #1d4ed8 !important; /* or a soft text color if you prefer */
   }
 
   .dark-gradient {
