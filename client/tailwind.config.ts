@@ -29,6 +29,9 @@ const config: Config = {
           "850": "#FDFDFD",
           "900": "#ffffff",
         },
+        link: {
+          "100": "#1da1f2",
+        },
       },
       boxShadow: {
         "light-100":
