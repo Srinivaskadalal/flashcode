@@ -13,7 +13,7 @@ const Navbar = async () => {
     <nav className="flex-between navbackground-light900_dark200 fixed z-50 w-full gap-5 p-6 shadow-light-300 dark:shadow-none sm:px-12">
       <Link href="/" className="flex items-center gap-1">
         <Image
-          src="/images/test.svg"
+          src="/flash_logo.png"
           alt="Flashcode Logo"
           width={23}
           height={23}

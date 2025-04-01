@@ -29,7 +29,7 @@ export default function QuestionCard({
         <Image
           src="/thunder.svg"
           alt="Thunder Icon"
-          width={400} // Adjusted for partial visibility
+          width={400}
           height={400}
           className="dark:invert dark:brightness-200"
           priority
@@ -56,7 +56,7 @@ export default function QuestionCard({
       </div>
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3 relative z-10">
-        <Metric
+        {/* <Metric
           imgUrl={author.image}
           alt={author.name}
           value={author.name}
@@ -65,7 +65,21 @@ export default function QuestionCard({
           textStyles="body-medium text-dark400_light700"
           isAuthor
           titleStyles="max-sm:hidden"
-        />
+        /> */}
+        {author && author.image ? (
+          <Metric
+            imgUrl={author.image}
+            alt={author.name}
+            value={author.name}
+            title={`• asked ${getTimeStamp(createdAt)}`}
+            href={ROUTES.PROFILE(author._id)}
+            textStyles="body-medium text-dark400_light700"
+            isAuthor
+            titleStyles="max-sm:hidden"
+          />
+        ) : (
+          <span>Loading...</span> // or fallback UI
+        )}
 
         <div className="flex items-center gap-3 max-sm:flex-wrap max-sm:justify-start">
           <Metric

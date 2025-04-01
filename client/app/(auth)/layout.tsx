@@ -17,7 +17,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
             </p>
           </div>
           <Image
-            src="images/test.svg"
+            src="/thund.svg"
             alt="FlashCode Logo"
             width={50}
             height={50}
