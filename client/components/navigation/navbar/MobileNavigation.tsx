@@ -36,12 +36,12 @@ export default async function MobileNavigation() {
 
         <Link href="/" className="flex items-center gap-1">
           <Image
-            src="/images/test.svg"
+            src="/flash_logo.png"
             alt="logo_of_flashcode"
             width={23}
             height={23}
           />
-          <p className="h2-bold font-space-grotesk ">
+          <p className="h2-bold font-pacifico ">
             <span className="!text-[#DAA520] dark:text-[#FF8C00]">Flash</span>
             <span className="!text-[#1E3A8A] dark:text-[#00C8FF]">Code</span>
           </p>

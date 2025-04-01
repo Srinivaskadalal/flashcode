@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   description:
     "A platform for students, faculty, and alumni to share knowledge, solve coding problems, and grow together.",
   icons: {
-    icon: "/images/test.svg",
+    icon: "/thund.svg",
   },
 };
 
