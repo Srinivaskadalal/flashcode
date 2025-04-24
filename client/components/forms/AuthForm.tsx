@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   DefaultValues,
@@ -73,66 +72,47 @@ const AuthForm = <T extends FieldValues>({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
-        className="mt-10 space-y-6"
+        className="space-y-6 w-full max-w-sm"
       >
-        {Object.keys(defaultValues).map((field) => (
-          <FormField
-            key={field}
-            control={form.control}
-            name={field as Path<T>}
-            render={({ field }) => (
-              <FormItem className="flex w-full flex-col gap-2.5">
-                <FormLabel className="paragraph-medium text-dark400_light700">
-                  {field.name === "email"
-                    ? "Email Address"
-                    : field.name.charAt(0).toUpperCase() + field.name.slice(1)}
-                </FormLabel>
-                <FormControl>
-                  <Input
-                    required
-                    type={field.name === "password" ? "password" : "text"}
-                    {...field}
-                    className="paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 no-focus min-h-12 rounded-1.5 border"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
+        <div className="space-y-5">
+          {Object.keys(defaultValues).map((field) => (
+            <FormField
+              key={field}
+              control={form.control}
+              name={field as Path<T>}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-sm font-normal text-neutral-300 mb-1">
+                    {field.name === "email"
+                      ? "Email address"
+                      : field.name.charAt(0).toUpperCase() +
+                        field.name.slice(1)}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      required
+                      type={field.name === "password" ? "password" : "text"}
+                      {...field}
+                      className="block w-full rounded-md border-0 bg-neutral-800 text-white px-3.5 py-2 shadow-sm ring-1 ring-inset ring-neutral-700 placeholder:text-neutral-500 focus:ring-2 focus:ring-inset focus:ring-white sm:text-sm sm:leading-6"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+        </div>
 
         <Button
           disabled={form.formState.isSubmitting}
-          className="primary-gradient paragraph-medium min-h-12 w-full rounded-2 px-4 py-3 font-inter !text-light-900"
+          className="w-full rounded-full bg-white text-black py-2 text-sm font-medium hover:bg-neutral-200"
         >
           {form.formState.isSubmitting
             ? buttonText === "Sign In"
-              ? "Signin In..."
+              ? "Signing In..."
               : "Signing Up..."
             : buttonText}
         </Button>
-
-        {formType === "SIGN_IN" ? (
-          <p>
-            Don&apos;t have an account?{" "}
-            <Link
-              href={ROUTES.SIGN_UP}
-              className="paragraph-semibold primary-text-gradient"
-            >
-              Sign up
-            </Link>
-          </p>
-        ) : (
-          <p>
-            Already have an account?{" "}
-            <Link
-              href={ROUTES.SIGN_IN}
-              className="paragraph-semibold primary-text-gradient"
-            >
-              Sign in
-            </Link>
-          </p>
-        )}
       </form>
     </Form>
   );
