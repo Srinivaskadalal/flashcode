@@ -1,0 +1,13 @@
+2025-03-16 10:30:01 - ERROR - Database error: Server timeout
+2025-03-17 10:42:19,221 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-03-17 10:42:19,222 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-17 10:42:19,222 - INFO -  * Restarting with stat
+2025-03-17 10:42:19,443 - WARNING -  * Debugger is active!
+2025-03-17 10:42:19,451 - INFO -  * Debugger PIN: 635-741-551
+2025-03-17 10:46:11,181 - INFO -  * Detected change in '/Users/jammichedukuruvanithinkumar/Desktop/admin_flashcode/server/config.py', reloading
+2025-03-17 10:46:11,231 - INFO -  * Restarting with stat
+2025-03-17 10:46:11,585 - WARNING -  * Debugger is active!
+2025-03-17 10:46:11,589 - INFO -  * Debugger PIN: 635-741-551
+2025-03-17 10:46:21,953 - INFO -  * Detected change in '/Users/jammichedukuruvanithinkumar/Desktop/admin_flashcode/server/models/database.py', reloading
+2025-03-17 10:46:21,995 - INFO -  * Restarting with stat

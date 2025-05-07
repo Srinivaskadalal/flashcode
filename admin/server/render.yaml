@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: flashcode-backend
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn app:app
+    envVars:
+      - key: MONGO_URI
+        value: "mongodb+srv://jknithin36:nani1234@cluster0.m5zvn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
